@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Clone Code') {
             steps {
-                git branch: 'main', url: ''
+                git branch: 'main', url: 'https://github.com/abi780/August.git'
             }
         }
 
