@@ -3,14 +3,14 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-        DOCKER_IMAGE = "docker.io/<your-dockerhub-username>/flask-demo"
+        DOCKER_IMAGE = "docker.io/abinaya780/flask-demo"
         KUBECONFIG_CREDENTIALS = credentials('kubeconfig-demo')
     }
 
     stages {
         stage('Clone Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/<your-username>/<repo-name>.git'
+                git branch: 'main', url: ''
             }
         }
 
