@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    version = os.environ.get("VERSION", "v1")
+    version = os.environ.get("VERSION", "v2")
     return f"Hello from Flask Demo! Version: {version}"
 
 if __name__ == "__main__":
