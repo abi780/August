@@ -1,37 +1,32 @@
 pipeline {
     agent any
-
+ 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         DOCKER_IMAGE = "docker.io/abinaya780/flask-demo"
         KUBECONFIG_CREDENTIALS = credentials('kubeconfig-demo')
-        GIT_REPO = "git@github.com:abi780/August.git"
     }
-
+ 
     stages {
-        stage('Checkout') {
+        stage('Clone Code') {
             steps {
-                git branch: 'main', url: "${GIT_REPO}", credentialsId: 'github-ssh-key'
+                git branch: 'main', url: 'https://github.com/abi780/August.git'
             }
         }
-
+ 
         stage('Build & Push Docker Image') {
             steps {
                 script {
-                    IMAGE_TAG = "v${env.BUILD_NUMBER}"
-                    IMAGE = "${DOCKER_IMAGE}:${IMAGE_TAG}"
-
                     sh """
                     echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u "$DOCKERHUB_CREDENTIALS_USR" --password-stdin
-                    docker build -t ${IMAGE} .
-                    docker push ${IMAGE}
-                    docker tag ${IMAGE} ${DOCKER_IMAGE}:latest
-                    docker push ${DOCKER_IMAGE}:latest
+                    docker build -t $DOCKER_IMAGE:${BUILD_NUMBER} .
+                    docker push $DOCKER_IMAGE:${BUILD_NUMBER}
+                    docker tag $DOCKER_IMAGE:${BUILD_NUMBER} $DOCKER_IMAGE:latest
+                    docker push $DOCKER_IMAGE:latest
                     """
                 }
             }
         }
-
         stage('Update Deployment YAML') {
             steps {
                 script {
@@ -42,7 +37,6 @@ pipeline {
                 }
             }
         }
-
         stage('Commit & Push Changes') {
             steps {
                 script {
@@ -56,7 +50,7 @@ pipeline {
                 }
             }
         }
-
+ 
         stage('Deploy to Kubernetes') {
             steps {
                 script {
@@ -64,6 +58,7 @@ pipeline {
                     mkdir -p ~/.kube
                     cp $KUBECONFIG_CREDENTIALS ~/.kube/config
                     kubectl create namespace demo-cicd --dry-run=client -o yaml | kubectl apply -f -
+                    sed -i 's|<your-dockerhub-username>|${DOCKERHUB_CREDENTIALS_USR}|g' k8s/deployment.yaml
                     kubectl apply -f k8s/
                     kubectl rollout status deployment/flask-demo -n demo-cicd
                     """
