@@ -27,16 +27,15 @@ pipeline {
                 }
             }
         }
-        stage('Update Deployment YAML') {
-            steps {
+       stage('Update Deployment YAML') {
+           steps {
                 script {
-                    // update image in deployment.yaml
-                    sh """
-                        sed -i 's|image: ${DOCKER_IMAGE}:.*|image: ${IMAGE}|' k8s/deployment.yaml
-                    """
-                }
+                      sh """
+                      sed -i 's|image: ${DOCKER_IMAGE}:.*|image: ${DOCKER_IMAGE}:${BUILD_NUMBER}|' k8s/deployment.yaml
+                      """
+              }    
             }
-        }
+          }
         stage('Commit & Push Changes') {
             steps {
                 script {
