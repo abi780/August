@@ -1,6 +1,8 @@
 pipeline {
     agent any
- 
+    options {
+        skipDefaultCheckout(true)
+    }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         DOCKER_IMAGE = "docker.io/abinaya780/flask-demo"
