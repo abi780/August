@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: "${GIT_REPO}"
+                git branch: 'main', url: "${GIT_REPO}", credentialsId: 'github-ssh-key'
             }
         }
 
