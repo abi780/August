@@ -6,12 +6,13 @@ pipeline {
         DOCKER_IMAGE = "docker.io/abinaya780/flask-demo"
         KUBECONFIG_CREDENTIALS = credentials('kubeconfig-demo')
     }
- 
-    stages {
+
+      stages {
         stage('Clone Code') {
             steps {
                 sshagent(['github-ssh']) {
-                     sh 'git clone -b main git@github.com:abi780/August.git .'
+                    sh 'git clone -b main git@github.com:abi780/August.git .'
+                }
             }
         }
  
