@@ -10,7 +10,8 @@ pipeline {
     stages {
         stage('Clone Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/abi780/August.git'
+                sshagent(['github-ssh']) {
+                     sh 'git clone -b main git@github.com:abi780/August.git .'
             }
         }
  
