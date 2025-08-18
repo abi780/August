@@ -3,7 +3,7 @@ stage('Clone Code') {
         checkout([$class: 'GitSCM', 
                   branches: [[name: '*/main']], 
                   userRemoteConfigs: [[
-                      url: 'git@github.com:abi780/August.git',
+                      url: 'git@github.com:abi780/ci-cd-demo-flask.git',
                       credentialsId: 'github-ssh'
                   ]]
         ])
