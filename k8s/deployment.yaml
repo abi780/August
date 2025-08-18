@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: flask-demo
-        image: docker.io/abinaya780/flask-demo:latest
+        image: docker.io/abinaya780/flask-demo:13
         ports:
         - containerPort: 5000
 
