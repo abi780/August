@@ -5,7 +5,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         DOCKER_IMAGE = "docker.io/abinaya780/flask-demo"
         KUBECONFIG_CREDENTIALS = credentials('kubeconfig-demo')
-        GIT_REPO = "https://github.com/abi780/August.git"
+        GIT_REPO = "git@github.com:abi780/August.git"
     }
 
     stages {
