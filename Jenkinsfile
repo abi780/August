@@ -19,6 +19,7 @@ pipeline {
                               credentialsId: 'github-ssh'
                           ]]
                 ])
+                 sh 'git checkout main'
             }
         }
 
