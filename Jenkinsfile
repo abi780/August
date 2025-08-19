@@ -59,7 +59,7 @@ pipeline {
                     git rebase origin/main || true
 
                     # Now push the rebased commit
-                    git push origin main --force
+                    git push origin main 
 
                     """
                 }
