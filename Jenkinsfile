@@ -55,6 +55,8 @@ pipeline {
                     git config user.name "CI Bot"
                     git add k8s/deployment.yaml
                     git commit -m "Update image to ${DOCKER_IMAGE}:${BUILD_NUMBER}" || echo "No changes to commit"
+                    # Make sure latest changes are pulled before push
+                git pull --rebase origin main || true
                     git push origin main
                     """
                 }
